@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="/bower_components/materialize/dist/css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body class = "blue-grey lighten-5">
+<home-page></home-page>
+<script src="/javascripts/flickrapi.dev.js"></script>
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/materialize/dist/js/materialize.js"></script>
+<script src="/bower_components/riot/riot.js"></script>
+
+<script src="/javascripts/main.js"></script>
+<script src="/javascripts/init.js"></script>
+<script src="/tags/components/flickr-header.js"></script>
+<script src="/tags/components/photos-container.js"></script>
+<script src="/tags/components/photo-card.js"></script>
+<script src="/tags/components/photo-image.js"></script>
+<script src="/tags/components/photo-detail.js"></script>
+<script src="/tags/components/photo-tags.js"></script>
+<script src="/tags/components/chip-tag.js"></script>
+<script src="/tags/pages/home-page.js"></script>
+<script>
+    riot.mount("home-page");
+</script>
+
+</body>
+</html>
