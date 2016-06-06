@@ -38,7 +38,7 @@
             self.photos.map(function (photo) {
                 var tags = photo.tags.split(" ");
                 for (var i = 0; i < tags.length; i++) {
-                    if (tags[i].length > 0 && tags[i].length < 20) {
+                    if (tags[i].length > 0 && tags[i].length < 40) {
                         if (!tagMapping[tags[i]]) {
                             tagMapping[tags[i]] = 1;
                         } else {
