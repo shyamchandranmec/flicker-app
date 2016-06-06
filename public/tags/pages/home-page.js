@@ -1,8 +1,8 @@
-riot.tag2('home-page', '<flickr-header></flickr-header> <photos-container photos="{this.filteredPhotos}"></photos-container>', '', '', function(opts) {
+riot.tag2('home-page', '<flickr-header></flickr-header> <tag-cloud words="{this.words}"></tag-cloud> <photos-container photos="{this.photos}"></photos-container>', '', '', function(opts) {
         var self = this;
         this.photos = [];
-        this.filteredPhotos = [];
         this.filter = null;
+        this.words = [];
         this.on("mount", function () {
             getRecentPhotosFromFlickr(app.pageCount);
             $(window).scroll(function () {
@@ -18,6 +18,7 @@ riot.tag2('home-page', '<flickr-header></flickr-header> <photos-container photos
                     }
                 }
             });
+
         });
 
         app.eventBus.on(app.constants.filterOnTags, function (tag) {
@@ -26,11 +27,35 @@ riot.tag2('home-page', '<flickr-header></flickr-header> <photos-container photos
             self.photos = [];
             searchPhotosFromFlickr(app.filterTag, app.filterPageCount);
         });
-        function filterPhotos () {
-            var filteredPhotos = self.photos.map(function (photo) {
-                return photo;
-            })
-            self.filteredPhotos = filteredPhotos;
+        function createTagCloud () {
+            var tagMapping = {};
+            var words = [];
+            self.photos.map(function (photo) {
+                var tags = photo.tags.split(" ");
+                for (var i = 0; i < tags.length; i++) {
+                    if (tags[i].length > 0 && tags[i].length < 20) {
+                        if (!tagMapping[tags[i]]) {
+                            tagMapping[tags[i]] = 1;
+                        } else {
+                                tagMapping[tags[i]] += 1;
+                        }
+                    }
+                }
+            });
+            for (var key in tagMapping) {
+                words.push({
+                    text: key,
+                    weight: tagMapping[key],
+                    handlers: {
+                        click: function (e) {
+                            app.eventBus.trigger(app.constants.filterOnTags, e.target.innerText)
+                        }
+                    }
+                })
+            }
+            self.words = words;
+            self.update()
+
         }
 
         function getRecentPhotosFromFlickr (page) {
@@ -41,8 +66,7 @@ riot.tag2('home-page', '<flickr-header></flickr-header> <photos-container photos
                 page: page
             }, function (err, res) {
                 self.photos = self.photos.concat(res.photos.photo);
-                filterPhotos();
-                self.update()
+                createTagCloud();
             })
         }
 
@@ -55,8 +79,7 @@ riot.tag2('home-page', '<flickr-header></flickr-header> <photos-container photos
                 page: page
             }, function (err, res) {
                 self.photos = self.photos.concat(res.photos.photo);
-                filterPhotos();
-                self.update()
+                createTagCloud();
             })
         }
 

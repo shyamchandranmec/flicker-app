@@ -11,4 +11,10 @@
     app.randomIntFromInterval = function (min, max){
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
+
+    $.fn.tagcloud.defaults = {
+        size: {start: 14, end: 48, unit: 'px'},
+        color: {start: '#cde', end: '#f52'}
+    };
+    
 })();

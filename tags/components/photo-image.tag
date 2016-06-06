@@ -5,7 +5,6 @@
     </div>
     <script>
         this.on("update",function () {
-            console.log("update")
             $('img', this.root).materialbox();
         })
     </script>

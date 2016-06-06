@@ -18,3 +18,11 @@ flickr-header {
     margin-top:50px;
 }
 
+#tag-cloud {
+    margin-left: auto;
+    margin-right:auto;
+}
+#tag-cloud span {
+    cursor: pointer;
+}
+
